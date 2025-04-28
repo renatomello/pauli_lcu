@@ -100,7 +100,6 @@ We also added ZX-decomposition which can be used in Qiskit (you need it to insta
 
 ```pycon
 >>> from pauli_lcu.decomposition import pauli_coefficients_xz_phase
->>> pauli_coefficients_xz_phase(matrix)
 >>> x, z, phase = pauli_coefficients_xz_phase(matrix)
 >>> x 
 array([[0],
@@ -116,4 +115,4 @@ PauliList(['I', 'Z', 'X', 'Y'])
 
 If you find this package useful please cite our paper:
 
-Timothy N. Georges, Bjorn K. Berntson, Christoph Sünderhauf, and Aleksei V. Ivanov, _Pauli Decomposition via the Fast Walsh-Hadamard Transform_, https://doi.org/10.48550/arXiv.2408.06206, (2024).
+Timothy N. Georges, Bjorn K. Berntson, Christoph Sünderhauf, and Aleksei V. Ivanov, _Pauli Decomposition via the Fast Walsh-Hadamard Transform_, New J. Phys. 27 033004 (2025), https://doi.org/10.1088/1367-2630/adb44d.
