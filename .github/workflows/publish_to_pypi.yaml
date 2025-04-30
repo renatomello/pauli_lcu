@@ -71,7 +71,7 @@ jobs:
           path: dist/
 
   publish-to-pypi:
-    name: Publish Python distribution to TestPyPI
+    name: Publish Python distribution to PyPI
     needs:
       - build-sdist
       - build-wheels
