@@ -70,33 +70,35 @@ jobs:
           name: "dist-${{ matrix.os_dist.dist }}"
           path: dist/
 
-  publish-to-pypi:
-    name: Publish Python distribution to PyPI
-    needs:
-      - build-sdist
-      - build-wheels
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/pauli_lcu
-    permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
-    steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v4
-      with:
-        pattern: dist-*
-        path: dist
-        merge-multiple: true
-    - name: Publish distribution to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+  # publish-to-pypi:
+  #   name: Publish Python distribution to PyPI
+  #   needs:
+  #     - build-sdist
+  #     - build-wheels
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: pypi
+  #     url: https://pypi.org/p/pauli_lcu
+  #   permissions:
+  #     id-token: write  # IMPORTANT: mandatory for trusted publishing
+  #   steps:
+  #   - name: Download all the dists
+  #     uses: actions/download-artifact@v4
+  #     with:
+  #       pattern: dist-*
+  #       path: dist
+  #       merge-multiple: true
+  #   - name: Publish distribution to PyPI
+  #     uses: pypa/gh-action-pypi-publish@release/v1
 
   github-release:
     name: >-
       Sign the Python distribution with Sigstore
       and upload them to GitHub Release
     needs:
-      - publish-to-pypi
+      # - publish-to-pypi
+      - build-wheels
+      - build-sdist
     runs-on: ubuntu-latest
     permissions:
       contents: write  # IMPORTANT: mandatory for making GitHub Releases
@@ -105,10 +107,11 @@ jobs:
     - name: Download all the dists
       uses: actions/download-artifact@v4
       with:
-        name: python-package-distributions
-        path: dist/
+        pattern: dist-*
+        path: dist
+        merge-multiple: true
     - name: Sign the dists with Sigstore
-      uses: sigstore/gh-action-sigstore-python@v2.1.1
+      uses: sigstore/gh-action-sigstore-python@v3
       with:
         inputs: >-
           ./dist/*.tar.gz
