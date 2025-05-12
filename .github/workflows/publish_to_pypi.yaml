@@ -70,26 +70,26 @@ jobs:
           name: "dist-${{ matrix.os_dist.dist }}"
           path: dist/
 
-  # publish-to-pypi:
-  #   name: Publish Python distribution to PyPI
-  #   needs:
-  #     - build-sdist
-  #     - build-wheels
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: pypi
-  #     url: https://pypi.org/p/pauli_lcu
-  #   permissions:
-  #     id-token: write  # IMPORTANT: mandatory for trusted publishing
-  #   steps:
-  #   - name: Download all the dists
-  #     uses: actions/download-artifact@v4
-  #     with:
-  #       pattern: dist-*
-  #       path: dist
-  #       merge-multiple: true
-  #   - name: Publish distribution to PyPI
-  #     uses: pypa/gh-action-pypi-publish@release/v1
+  publish-to-pypi:
+    name: Publish Python distribution to PyPI
+    needs:
+      - build-sdist
+      - build-wheels
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pauli_lcu
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v4
+      with:
+        pattern: dist-*
+        path: dist
+        merge-multiple: true
+    - name: Publish distribution to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
 
   github-release:
     name: >-
